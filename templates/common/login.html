@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login - GAMPSI Psicología Lúdica</title>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+    />
+    <style>
+        body {
+            background: linear-gradient(to right, #5e9cff, #ff815d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .login-card {
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            max-width: 420px;
+            width: 100%;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .login-title {
+            color: #1A73E8;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            font-size: 1.8rem;
+        }
+
+        .btn-primary {
+            background-color: #FB8C00;
+            border-color: #FB8C00;
+            font-weight: 500;
+        }
+
+        .btn-primary:hover {
+            background-color: #ef6c00;
+            border-color: #ef6c00;
+        }
+
+        .form-control:focus {
+            border-color: #1A73E8;
+            box-shadow: 0 0 0 0.2rem rgba(26, 115, 232, 0.25);
+        }
+
+        a {
+            color: #1A73E8;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="login-card">
+    <h3 class="login-title">Iniciar Sesión</h3>
+    <form id="loginForm">
+        <div class="mb-3">
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    required
+                    placeholder="correo@ejemplo.com"
+            />
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    required
+                    placeholder="********"
+            />
+        </div>
+        <a type="submit" class="btn btn-primary w-100 mt-2" href="./../psycologist/main.html">Ingresar</a>
+        <div class="text-center mt-3">
+            <a href="#">¿Olvidaste tu contraseña?</a><br />
+            <a href="#">¿No tienes cuenta? Regístrate</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        console.log("Intentando iniciar sesión con:", email, password);
+
+
+    });
+</script>
+</body>
+</html>

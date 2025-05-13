@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registro - GAMPSI Psicología Lúdica</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #f6d365, #fda085);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .register-card {
+            background-color: #fff;
+            border-radius: 25px;
+            padding: 2.5rem 2rem;
+            max-width: 650px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .register-title {
+            text-align: center;
+            color: #FB8C00;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 12px;
+        }
+
+        .form-text {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .btn-primary {
+            background-color: #FB8C00;
+            border-color: #FB8C00;
+            font-weight: 600;
+            border-radius: 12px;
+        }
+
+        .btn-primary:hover {
+            background-color: #ef6c00;
+            border-color: #ef6c00;
+        }
+
+        .text-center a {
+            color: #1A73E8;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .text-center a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .icon-label i {
+            margin-right: 8px;
+            color: #FB8C00;
+        }
+    </style>
+</head>
+<body>
+
+<div class="register-card">
+    <h3 class="register-title">Regístrate como profesional de la salud mental</h3>
+    <p class="text-center mb-4 text-muted">Forma parte de GAMPSI y accede a herramientas gamificadas para evaluación psicológica.</p>
+    <form id="registerForm">
+        <div class="row g-3">
+            <div class="col-md-12">
+                <label class="form-label icon-label"><i class="fa-solid fa-user"></i>Nombre completo</label>
+                <input type="text" class="form-control" id="fullName" required placeholder="Ej: Dra. Ana Rodríguez">
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label icon-label"><i class="fa-solid fa-envelope"></i>Correo electrónico</label>
+                <input type="email" class="form-control" id="email" required placeholder="ejemplo@correo.com">
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label icon-label"><i class="fa-solid fa-phone"></i>Teléfono de contacto</label>
+                <input type="tel" class="form-control" id="phone" required placeholder="Ej: 3001234567">
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label icon-label"><i class="fa-solid fa-lock"></i>Contraseña</label>
+                <input type="password" class="form-control" id="password" required placeholder="Mínimo 6 caracteres">
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label icon-label"><i class="fa-solid fa-lock"></i>Confirmar contraseña</label>
+                <input type="password" class="form-control" id="confirmPassword" required placeholder="Repite tu contraseña">
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label icon-label"><i class="fa-solid fa-user-tag"></i>Tipo de usuario</label>
+                <select class="form-select" id="userType" required>
+                    <option value="" disabled selected>Selecciona</option>
+                    <option value="psicologo">Psicólogo/a</option>
+                    <option value="empresa">Empresa o Institución</option>
+                </select>
+                <div class="form-text mt-1">Esta plataforma está diseñada para profesionales y organizaciones que usan tecnologías innovadoras para evaluar y apoyar la salud mental.</div>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label icon-label"><i class="fa-solid fa-building"></i>Nombre del consultorio / empresa</label>
+                <input type="text" class="form-control" id="organization" required placeholder="Ej: Consultorio Mente Sana">
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label icon-label"><i class="fa-solid fa-map-pin"></i>Ciudad</label>
+                <input type="text" class="form-control" id="city" required placeholder="Bogotá">
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label icon-label"><i class="fa-solid fa-id-badge"></i>Matrícula profesional</label>
+                <input type="text" class="form-control" id="license" placeholder="Si aplica">
+                <div class="form-text">Obligatorio para psicólogos registrados.</div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 mt-4">Unirme a GAMPSI</button>
+        <div class="text-center mt-3">
+            <a href="login.html">¿Ya tienes una cuenta? Inicia sesión</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.getElementById("registerForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+
+        if (password !== confirmPassword) {
+            alert("Las contraseñas no coinciden. Intenta nuevamente.");
+            return;
+        }
+
+        // Simulación de envío
+        console.log("Formulario enviado correctamente");
+        alert("¡Registro exitoso! Redirigiendo...");
+        window.location.href = "https://gampsi-psicologia-ludica-1ablj39.gamma.site/";
+    });
+</script>
+
+</body>
+</html>
+
