@@ -22,11 +22,22 @@ const diagnosticGames = [
     }
 ];
 
-const perfil = [{
-    name : 'Laura Gomez',
-    specialist: 'Especialista en Ansiedad, Depresión y Terapia Cognitivo-Conductual',
-    contact: 'laura.gomez@ejemplo.com | 📞 +57 300 123 4567'
-}]
+let perfil = {
+    nombre: "Laura Gómez",
+    especialidades: "Especialista en Ansiedad, Depresión y Terapia Cognitivo-Conductual",
+    contacto: "📧 laura.gomez@ejemplo.com | +57 300 123 4567",
+    descripcion: "Soy una profesional en Psicología con más de 10 años de experiencia en el acompañamiento de personas con trastornos emocionales. Brindo herramientas prácticas desde el enfoque cognitivo-conductual para mejorar la salud mental de mis pacientes."
+}
+
+let nav = document.getElementById("nav")
+nav.textContent = "Hola, " + perfil.nombre
+
+function mostrarPerfil() {
+    document.getElementById("nombrePerfil").textContent = perfil.nombre;
+    document.getElementById("especialidadesPerfil").textContent = perfil.especialidades;
+    document.getElementById("contactoPerfil").textContent = perfil.contacto;
+    document.getElementById("descripcionPerfil").textContent = perfil.descripcion;
+}
 
 // Datos de prueba para el dashboard
 const dashboardData = {
@@ -47,9 +58,35 @@ const dashboardData = {
     stats: {
         totalUsers: 1243,
         totalActivities: 567,
-        completionRate: 82
+        completionRate: 80
     }
 };
+
+function mostrarAlertaPendiente() {
+    Swal.fire({
+        title: 'Informe no disponible',
+        text: 'Todavía se están analizando tus datos',
+        icon: 'warning', // success, error, warning, info, question
+        confirmButtonText: 'Entendido'
+    });
+}
+
+function mostrarAlertaNoInicio() {
+    Swal.fire({
+        title: 'Informe no disponible',
+        text: 'El paciente aún no ha realizado ninguna prueba',
+        icon: 'error', // success, error, warning, info, question
+        confirmButtonText: 'Entendido'
+    });
+}
+
+function guardarPerfil() {
+    Swal.fire({
+        title: 'Perfil guardado correctamente',
+        icon: 'success', // success, error, warning, info, question
+        confirmButtonText: 'Entendido'
+    });
+}
 
 // Función para inicializar gráficos con datos de prueba
 function initializeCharts() {
@@ -152,7 +189,7 @@ async function changeView(view) {
     const content = document.getElementById('content');
     content.innerHTML = '';
 
-    switch(view) {
+    switch (view) {
         case 'dashboard':
             content.innerHTML = `
                 <h2>Panel de Control</h2>
@@ -227,17 +264,15 @@ async function changeView(view) {
         <h2>Perfil Profesional</h2>
         <div class="profile-container" id="profileView">
             <div class="profile-header">
-                <img src="../assets/psi.jpg" alt="Foto de Perfil">
+                <img src="C:/Universidad/NovenoSemestre/Formacion_empresarial_4/gampsi-platform/assets/psi.jpg" alt="Foto de Perfil">
                 <div class="profile-info">
-                    <h3>Psicóloga Laura Gómez</h3>
-                    <p class="specialties">Especialista en Ansiedad, Depresión y Terapia Cognitivo-Conductual</p>
-                    <p class="contact">📧 </p>
+                    <h3 id="nombrePerfil"></h3>
+                    <p class="specialties" id="especialidadesPerfil"></p>
+                    <p class="contact" id="contactoPerfil"></p>
                 </div>
             </div>
             <div class="profile-description">
-                <p>
-                    Soy una profesional en Psicología con más de 10 años de experiencia en el acompañamiento de personas con trastornos emocionales. Brindo herramientas prácticas desde el enfoque cognitivo-conductual para mejorar la salud mental de mis pacientes.
-                </p>
+                <p id="descripcionPerfil"></p>
             </div>
             <button class="edit-profile-btn" onclick="mostrarFormularioEdicion()">Editar Perfil</button>
         </div>
@@ -245,7 +280,7 @@ async function changeView(view) {
         <div class="profile-container" id="profileForm" style="display:none;">
             <form id="formEditarPerfil">
                 <label>Nombre completo:</label><br/>
-                <input type="text" name="nombre" value="Psicóloga Laura Gómez" required><br/><br/>
+                <input type="text" name="nombre" value="Laura Gómez" required><br/><br/>
                 
                 <label>Especialidades:</label><br/>
                 <input type="text" name="especialidades" value="Especialista en Ansiedad, Depresión y Terapia Cognitivo-Conductual" required><br/><br/>
@@ -256,7 +291,7 @@ async function changeView(view) {
                 <label>Descripción:</label><br/>
                 <textarea name="descripcion" rows="5" required>Soy una profesional en Psicología con más de 10 años de experiencia en el acompañamiento de personas con trastornos emocionales...</textarea><br/><br/>
                 
-                <button type="submit" class="edit-profile-btn">Guardar</button>
+                <button type="submit" class="edit-profile-btn" onclick="guardarPerfil()">Guardar</button>
                 <button type="button" class="edit-profile-btn" onclick="cancelarEdicion()">Cancelar</button>
             </form>
         </div>
@@ -264,6 +299,8 @@ async function changeView(view) {
 
             // Agrega el script para manejar el formulario
             setTimeout(() => {
+                window.onload = mostrarPerfil();
+
                 window.mostrarFormularioEdicion = function () {
                     document.getElementById('profileView').style.display = 'none';
                     document.getElementById('profileForm').style.display = 'block';
@@ -283,8 +320,13 @@ async function changeView(view) {
                     const contacto = data.get('contacto');
                     const descripcion = data.get('descripcion');
 
+                    perfil.nombre = nombre
+                    perfil.contacto = contacto
+                    perfil.descripcion = descripcion
+                    perfil.especialidades = especialidades
+                    nav.textContent = "Hola, " + nombre
+                    window.onload = mostrarPerfil();
                     // Aquí puedes hacer lo que quieras con los datos (como guardarlos en una base o localStorage)
-                    alert('Perfil actualizado correctamente.');
 
                     // Oculta el formulario y vuelve a mostrar la vista (en un sistema real, deberías volver a renderizar con los nuevos datos)
                     cancelarEdicion();
@@ -321,7 +363,7 @@ async function changeView(view) {
                                 <td>10/05/2025</td>
                                 <td><span class="status completed">Completado</span></td>
                                 <td>
-                                    <a onclick="window.open('pdf/maria_gonzalez.pdf')" target="_blank" class="btn-report">Ver Informe</a>
+                                    <a onclick="window.open('pdf/maria_gonzalez.pdf')" target="_blank" class="btn-report">Ver</a>
                                 </td>
                             </tr>
                             <tr>
@@ -331,7 +373,7 @@ async function changeView(view) {
                                 <td>08/05/2025</td>
                                 <td><span class="status in-progress">En proceso</span></td>
                                 <td>
-                                    <a onclick="window.open('pdf/carlos_ruiz.pdf')" target="_blank" class="btn-report">Ver</a>
+                                    <a onclick="mostrarAlertaPendiente()" target="_blank" class="btn-report">Ver</a>
                                 </td>
                             </tr>
                             <tr>
@@ -341,7 +383,7 @@ async function changeView(view) {
                                 <td>06/05/2025</td>
                                 <td><span class="status not-started">No iniciado</span></td>
                                 <td>
-                                    <a onclick="window.open('pdf/laura_perez.pdf')" target="_blank" class="btn-report">Ver</a>
+                                    <a onclick="mostrarAlertaNoInicio()" target="_blank" class="btn-report">Ver</a>
                                 </td>
                             </tr>
                             <tr>
@@ -349,7 +391,7 @@ async function changeView(view) {
                                 <td>Ciudad Diamante</td>
                                 <td>Bipolaridad</td>
                                 <td>06/05/2025</td>
-                                <td><span class="status not-started">No iniciado</span></td>
+                                <td><span class="status completed">Completado</span></td>
                                 <td>
                                     <a onclick="window.open('pdf/martin_medina.pdf')" target="_blank" class="btn-report">Ver</a>
                                 </td>
@@ -375,17 +417,21 @@ async function changeView(view) {
 
         case 'social':
             content.innerHTML = `
-             <section class="social-section">
-              <h2 class="title">Opiniones</h2>
-              <div class="carousel-wrapper">
-                <div class="carousel-track" id="infinite-carousel">
-                  <!-- Las cards se insertan aquí con JS -->
+            <div class="progress-container">
+                <div class="progress-label">Progreso: <span id="progress-percent">0%</span></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
                 </div>
-              </div>
+            </div>
+            <h4 class="title">¡Sigue así, ya casi alcanzas el número de diagnosticos mensuales!</h4>
+            <section class="social-section">
+                <h2 class="title">Opiniones</h2>
+                <div class="carousel-wrapper">
+                    <div class="carousel-track" id="infinite-carousel">
+                        <!-- Las cards se insertan aquí con JS -->
+                    </div>
+                </div>
             </section>
-
-
-
             `
             const opinions = [
                 { author: "Laura", comment: "Excelente plataforma, intuitiva y eficiente." },
@@ -398,16 +444,37 @@ async function changeView(view) {
 
             const track = document.getElementById('infinite-carousel');
 
-        function createCard(opinion) {
-            const div = document.createElement('div');
-            div.className = 'carousel-item';
-            div.innerHTML = `<strong>${opinion.author}</strong><p>${opinion.comment}</p>`;
-            return div;
-        }
+            function createCard(opinion) {
+                const div = document.createElement('div');
+                div.className = 'carousel-item';
+                div.innerHTML = `<strong>${opinion.author}</strong><p>${opinion.comment}</p>`;
+                return div;
+            }
 
             // Duplicar opiniones para efecto loop
             const fullList = [...opinions, ...opinions];
             fullList.forEach(op => track.appendChild(createCard(op)));
+
+            function actualizarProgreso(porcentaje) {
+                const fill = document.getElementById("progress-fill");
+                const label = document.getElementById("progress-percent");
+
+                porcentaje = Math.min(100, Math.max(0, porcentaje)); // Limita entre 0 y 100
+                fill.style.width = `${porcentaje}%`;
+                label.textContent = `${porcentaje}%`;
+            }
+
+            // Ejemplo de uso (incremento gradual)
+            let progreso = 0;
+            const interval = setInterval(() => {
+                if (progreso <= 80) {
+                    actualizarProgreso(progreso);
+                    progreso += 10;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 500);
+
             break;
 
     }
