@@ -391,3 +391,133 @@ footer {
     background-color: #f8d7da;
     color: #721c24;
 }
+
+.btn-report {
+    background-color: #2ecc71;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.btn-report:hover {
+    background-color: #27ae60;
+}
+
+
+.table-search {
+    margin-bottom: 15px;
+    text-align: right;
+}
+
+#searchInput {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+#profileForm {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+#formEditarPerfil label {
+    font-weight: 600;
+    color: #2c3e50;
+    display: block;
+    margin-bottom: 5px;
+}
+
+#formEditarPerfil input,
+#formEditarPerfil textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+#formEditarPerfil input:focus,
+#formEditarPerfil textarea:focus {
+    border-color: #1A73E8;
+    outline: none;
+}
+
+#formEditarPerfil button {
+    margin-right: 10px;
+    padding: 10px 18px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+#formEditarPerfil button:hover {
+    background-color: #2980b9;
+}
+
+#formEditarPerfil button[type="button"] {
+    background-color: #bdc3c7;
+}
+
+#formEditarPerfil button[type="button"]:hover {
+    background-color: #95a5a6;
+}
+
+
+.social-section {
+    padding: 2rem;
+    background-color: #f4f4f4;
+    font-family: sans-serif;
+}
+
+.title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.carousel-wrapper {
+    overflow: hidden;
+    width: 100%;
+}
+
+.carousel-track {
+    display: flex;
+    width: max-content;
+    animation: scroll-left 20s linear infinite;
+}
+
+.carousel-item {
+    flex: 0 0 auto;
+    width: 250px;
+    margin: 0 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}

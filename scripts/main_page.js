@@ -22,6 +22,12 @@ const diagnosticGames = [
     }
 ];
 
+const perfil = [{
+    name : 'Laura Gomez',
+    specialist: 'Especialista en Ansiedad, Depresión y Terapia Cognitivo-Conductual',
+    contact: 'laura.gomez@ejemplo.com | 📞 +57 300 123 4567'
+}]
+
 // Datos de prueba para el dashboard
 const dashboardData = {
     monthlyActivity: {
@@ -206,8 +212,12 @@ async function changeView(view) {
               <span><strong>Costo:</strong> ${game.cost.toLocaleString()}</span><br>
               <span><strong>Duración:</strong> ${game.duration}</span>
             </div>
-            <button class="card-button">Solicitar</button>
-          </div>
+                <a href="https://marvelapp.com/prototype/7i1gbg8/screen/96054284" target="_blank">
+                  <button style="padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer;">
+                    Solicitar
+                  </button>
+                </a>
+            </div>
           `).join('')}
         </div>
     `;
@@ -215,13 +225,13 @@ async function changeView(view) {
         case 'perfil':
             content.innerHTML = `
         <h2>Perfil Profesional</h2>
-        <div class="profile-container">
+        <div class="profile-container" id="profileView">
             <div class="profile-header">
                 <img src="../assets/psi.jpg" alt="Foto de Perfil">
                 <div class="profile-info">
                     <h3>Psicóloga Laura Gómez</h3>
                     <p class="specialties">Especialista en Ansiedad, Depresión y Terapia Cognitivo-Conductual</p>
-                    <p class="contact">📧 laura.gomez@ejemplo.com | 📞 +57 300 123 4567</p>
+                    <p class="contact">📧 </p>
                 </div>
             </div>
             <div class="profile-description">
@@ -229,16 +239,69 @@ async function changeView(view) {
                     Soy una profesional en Psicología con más de 10 años de experiencia en el acompañamiento de personas con trastornos emocionales. Brindo herramientas prácticas desde el enfoque cognitivo-conductual para mejorar la salud mental de mis pacientes.
                 </p>
             </div>
-            <button class="edit-profile-btn">Editar Perfil</button>
+            <button class="edit-profile-btn" onclick="mostrarFormularioEdicion()">Editar Perfil</button>
+        </div>
+
+        <div class="profile-container" id="profileForm" style="display:none;">
+            <form id="formEditarPerfil">
+                <label>Nombre completo:</label><br/>
+                <input type="text" name="nombre" value="Psicóloga Laura Gómez" required><br/><br/>
+                
+                <label>Especialidades:</label><br/>
+                <input type="text" name="especialidades" value="Especialista en Ansiedad, Depresión y Terapia Cognitivo-Conductual" required><br/><br/>
+                
+                <label>Contacto:</label><br/>
+                <input type="text" name="contacto" value="laura.gomez@ejemplo.com | +57 300 123 4567" required><br/><br/>
+                
+                <label>Descripción:</label><br/>
+                <textarea name="descripcion" rows="5" required>Soy una profesional en Psicología con más de 10 años de experiencia en el acompañamiento de personas con trastornos emocionales...</textarea><br/><br/>
+                
+                <button type="submit" class="edit-profile-btn">Guardar</button>
+                <button type="button" class="edit-profile-btn" onclick="cancelarEdicion()">Cancelar</button>
+            </form>
         </div>
     `;
+
+            // Agrega el script para manejar el formulario
+            setTimeout(() => {
+                window.mostrarFormularioEdicion = function () {
+                    document.getElementById('profileView').style.display = 'none';
+                    document.getElementById('profileForm').style.display = 'block';
+                }
+
+                window.cancelarEdicion = function () {
+                    document.getElementById('profileView').style.display = 'block';
+                    document.getElementById('profileForm').style.display = 'none';
+                }
+
+                const form = document.getElementById('formEditarPerfil');
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const data = new FormData(form);
+                    const nombre = data.get('nombre');
+                    const especialidades = data.get('especialidades');
+                    const contacto = data.get('contacto');
+                    const descripcion = data.get('descripcion');
+
+                    // Aquí puedes hacer lo que quieras con los datos (como guardarlos en una base o localStorage)
+                    alert('Perfil actualizado correctamente.');
+
+                    // Oculta el formulario y vuelve a mostrar la vista (en un sistema real, deberías volver a renderizar con los nuevos datos)
+                    cancelarEdicion();
+                });
+            }, 100);
             break;
+
 
         case 'list_attendance':
             content.innerHTML = `
              <div class="attended-list-container">
                 <h2>Pacientes Atendidos</h2>
                 <div class="table-wrapper">
+                <div class="table-search">
+                    <input type="text" id="searchInput" placeholder="Buscar por nombre, videojuego, diagnóstico..." />
+                </div>
+
                     <table class="attended-table">
                         <thead>
                             <tr>
@@ -253,38 +316,104 @@ async function changeView(view) {
                         <tbody>
                             <tr>
                                 <td>María González</td>
-                                <td>Laberinto Mental</td>
+                                <td>Ciudad Diamante</td>
                                 <td>Ansiedad leve</td>
                                 <td>10/05/2025</td>
                                 <td><span class="status completed">Completado</span></td>
-                                <td><button class="btn-detail">Ver</button></td>
+                                <td>
+                                    <a onclick="window.open('pdf/maria_gonzalez.pdf')" target="_blank" class="btn-report">Ver Informe</a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Carlos Ruiz</td>
-                                <td>RompePatrones, FocusRun</td>
+                                <td>Ciudad Diamante</td>
                                 <td>TDAH moderado</td>
                                 <td>08/05/2025</td>
                                 <td><span class="status in-progress">En proceso</span></td>
-                                <td><button class="btn-detail">Ver</button></td>
+                                <td>
+                                    <a onclick="window.open('pdf/carlos_ruiz.pdf')" target="_blank" class="btn-report">Ver</a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Laura Pérez</td>
-                                <td>MindBuilder</td>
+                                <td>Ciudad Diamante</td>
                                 <td>Sin indicios</td>
                                 <td>06/05/2025</td>
                                 <td><span class="status not-started">No iniciado</span></td>
-                                <td><button class="btn-detail">Ver</button></td>
+                                <td>
+                                    <a onclick="window.open('pdf/laura_perez.pdf')" target="_blank" class="btn-report">Ver</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Martin Medina</td>
+                                <td>Ciudad Diamante</td>
+                                <td>Bipolaridad</td>
+                                <td>06/05/2025</td>
+                                <td><span class="status not-started">No iniciado</span></td>
+                                <td>
+                                    <a onclick="window.open('pdf/martin_medina.pdf')" target="_blank" class="btn-report">Ver</a>
+                                </td>
                             </tr>
                         </tbody>
+
                     </table>
                 </div>
             </div>
-
             `
+            document.getElementById("searchInput").addEventListener("input", function () {
+                const filter = this.value.toLowerCase();
+                const rows = document.querySelectorAll(".attended-table tbody tr");
+
+                rows.forEach((row) => {
+                    const cells = row.querySelectorAll("td");
+                    const rowText = Array.from(cells).map(cell => cell.textContent.toLowerCase()).join(" ");
+                    row.style.display = rowText.includes(filter) ? "" : "none";
+                });
+            });
             break;
 
+
+        case 'social':
+            content.innerHTML = `
+             <section class="social-section">
+              <h2 class="title">Opiniones</h2>
+              <div class="carousel-wrapper">
+                <div class="carousel-track" id="infinite-carousel">
+                  <!-- Las cards se insertan aquí con JS -->
+                </div>
+              </div>
+            </section>
+
+
+
+            `
+            const opinions = [
+                { author: "Laura", comment: "Excelente plataforma, intuitiva y eficiente." },
+                { author: "Daniel", comment: "Atención al cliente 10/10." },
+                { author: "Sofía", comment: "Muy útil para mi día a día." },
+                { author: "SmartTech", comment: "Fácil de integrar y mantener." },
+                { author: "AgroMarket", comment: "Mejoramos nuestros procesos internos." },
+                { author: "Grupo Finanza", comment: "Servicio confiable desde el inicio." }
+            ];
+
+            const track = document.getElementById('infinite-carousel');
+
+        function createCard(opinion) {
+            const div = document.createElement('div');
+            div.className = 'carousel-item';
+            div.innerHTML = `<strong>${opinion.author}</strong><p>${opinion.comment}</p>`;
+            return div;
+        }
+
+            // Duplicar opiniones para efecto loop
+            const fullList = [...opinions, ...opinions];
+            fullList.forEach(op => track.appendChild(createCard(op)));
+            break;
 
     }
 }
 
 changeView('dashboard');
+
+
+
