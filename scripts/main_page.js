@@ -26,8 +26,8 @@ const diagnosticGames = [
 const dashboardData = {
     monthlyActivity: {
         labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-        completed: [15, 22, 18, 25, 30, 28, 35, 40, 38, 45, 50, 55],
-        created: [20, 25, 22, 30, 35, 32, 40, 45, 42, 50, 55, 60]
+        completed: [15, 22, 18, 25, 30, 15, 35, 40, 38, 45, 40, 55],
+        created: [20, 25, 22, 30, 35, 16, 40, 45, 42, 50, 50, 60]
     },
     categories: {
         labels: ['Ansiedad', 'Depresión', 'TDAH', 'Trastorno Bipolar', 'Estrés Postraumático'],
@@ -36,7 +36,7 @@ const dashboardData = {
     },
     annualProgress: {
         labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-        data: [10, 20, 30, 40, 50, 60, 65, 70, 75, 80, 85, 90]
+        data: [10, 20, 30, 40, 50, 40, 65, 70, 75, 80, 85, 90]
     },
     stats: {
         totalUsers: 1243,
@@ -149,7 +149,7 @@ async function changeView(view) {
     switch(view) {
         case 'dashboard':
             content.innerHTML = `
-                <h2>Dashboard</h2>
+                <h2>Panel de Control</h2>
                 <p>Resumen de tu actividad en la plataforma.</p>
                 <div class="dashboard-grid">
                     <div class="chart-container">
@@ -195,75 +195,96 @@ async function changeView(view) {
             initializeCharts();
             break;
         case 'videojuegos':
-
             content.innerHTML = `
-            <h2>Solicita el Videojuego que necestas</h2>
-            <div class="cards-container">
-              ${diagnosticGames.map(game => `
-              <div class="card">
-                <h3>${game.title}</h3>
-                <p class="description">${game.description}</p>
-                <div class="details">
-                  <span><strong>Costo:</strong> ${game.cost.toLocaleString()}</span>
-                  <span><strong>Duración:</strong> ${game.duration}</span>
-                </div>
-                <button style="margin-top: 5px">Solicitar</button>
-
-              </div>
-              
-            `).join('')}
+        <h2>Solicita el Videojuego que necesitas</h2>
+        <div class="cards-container">
+          ${diagnosticGames.map(game => `
+          <div class="card">
+            <h3>${game.title}</h3>
+            <p class="description">${game.description}</p>
+            <div class="details">
+              <span><strong>Costo:</strong> ${game.cost.toLocaleString()}</span><br>
+              <span><strong>Duración:</strong> ${game.duration}</span>
             </div>
-          `;
+            <button class="card-button">Solicitar</button>
+          </div>
+          `).join('')}
+        </div>
+    `;
+            break;
+        case 'perfil':
+            content.innerHTML = `
+        <h2>Perfil Profesional</h2>
+        <div class="profile-container">
+            <div class="profile-header">
+                <img src="../assets/psi.jpg" alt="Foto de Perfil">
+                <div class="profile-info">
+                    <h3>Psicóloga Laura Gómez</h3>
+                    <p class="specialties">Especialista en Ansiedad, Depresión y Terapia Cognitivo-Conductual</p>
+                    <p class="contact">📧 laura.gomez@ejemplo.com | 📞 +57 300 123 4567</p>
+                </div>
+            </div>
+            <div class="profile-description">
+                <p>
+                    Soy una profesional en Psicología con más de 10 años de experiencia en el acompañamiento de personas con trastornos emocionales. Brindo herramientas prácticas desde el enfoque cognitivo-conductual para mejorar la salud mental de mis pacientes.
+                </p>
+            </div>
+            <button class="edit-profile-btn">Editar Perfil</button>
+        </div>
+    `;
+            break;
+
+        case 'list_attendance':
+            content.innerHTML = `
+             <div class="attended-list-container">
+                <h2>Pacientes Atendidos</h2>
+                <div class="table-wrapper">
+                    <table class="attended-table">
+                        <thead>
+                            <tr>
+                                <th>Paciente</th>
+                                <th>Videojuegos Jugados</th>
+                                <th>Diagnóstico</th>
+                                <th>Fecha</th>
+                                <th>Completado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>María González</td>
+                                <td>Laberinto Mental</td>
+                                <td>Ansiedad leve</td>
+                                <td>10/05/2025</td>
+                                <td><span class="status completed">Completado</span></td>
+                                <td><button class="btn-detail">Ver</button></td>
+                            </tr>
+                            <tr>
+                                <td>Carlos Ruiz</td>
+                                <td>RompePatrones, FocusRun</td>
+                                <td>TDAH moderado</td>
+                                <td>08/05/2025</td>
+                                <td><span class="status in-progress">En proceso</span></td>
+                                <td><button class="btn-detail">Ver</button></td>
+                            </tr>
+                            <tr>
+                                <td>Laura Pérez</td>
+                                <td>MindBuilder</td>
+                                <td>Sin indicios</td>
+                                <td>06/05/2025</td>
+                                <td><span class="status not-started">No iniciado</span></td>
+                                <td><button class="btn-detail">Ver</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            `
             break;
 
 
     }
 }
-
-const style = document.createElement('style');
-style.textContent = `
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.chart-container {
-    background: white;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.stats-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.stat-box {
-    background: #f8f9fa;
-    border-radius: 8px;
-    padding: 15px;
-    text-align: center;
-    flex: 1;
-    min-width: 100px;
-}
-
-.stat-value {
-    font-size: 24px;
-    font-weight: bold;
-    display: block;
-    color: #2c3e50;
-}
-
-.stat-label {
-    font-size: 14px;
-    color: #7f8c8d;
-}
-`;
-document.head.appendChild(style);
 
 changeView('dashboard');
